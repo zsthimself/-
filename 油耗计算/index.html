@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>油耗计算器</title>
+    <meta name="description" content="快速计算你的汽车百公里油耗成本">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>油耗计算器</h1>
+        <p>快速了解你的汽车百公里油耗成本</p>
+    </header>
+
+    <main>
+        <section>
+    <h2>默认计算</h2>
+    <p>默认中国油价：<span id="default-price">7.8元/升</span></p>
+    <p>默认家庭汽车油耗：<span id="default-consumption">8.2升/100公里</span></p>
+    <p>百公里花费：<span id="default-cost"></span></p>
+    <p>百公里耗油量：<span id="default-liter">8升</span></p>
+</section>
+
+<script>
+    function calculateDefaultCost() {
+        var pricePerLiter = 6; // 默认油价（元/升）
+        var consumptionPerHundredKm = 8; // 默认油耗（升/100公里）
+
+        // 计算百公里花费
+        var costPerHundredKm = pricePerLiter * consumptionPerHundredKm;
+        document.getElementById('default-cost').innerText = costPerHundredKm + '元';
+    }
+
+    // 当页面加载完毕时执行计算
+    window.onload = calculateDefaultCost;
+</script>
+
+       <section>
+    <h2>自定义计算</h2>
+    <form id="calculation-form">
+        <label for="consumption">汽车油耗 (升/100公里):</label>
+        <input type="number" id="consumption" name="consumption" step=0.01 required>
+
+        <label for="distance">行驶公里数:</label>
+        <input type="number" id="distance" name="distance" step="0.01" required>
+
+        <button type="submit">计算花费</button>
+    </form>
+    <p id="custom-calculation-result"></p>
+</section>
+
+<script>
+    document.getElementById('calculation-form').onsubmit = function(event) {
+        // 防止表单默认提交行为
+        event.preventDefault();
+
+        // 获取用户输入的值
+        var consumption = document.getElementById('consumption').value;
+        var distance = document.getElementById('distance').value;
+
+        // 进行计算
+        var cost = calculateCost(consumption, distance);
+
+        // 显示结果
+        document.getElementById('custom-calculation-result').innerText = '总花费: ' + cost + '元';
+    };
+
+    function calculateCost(consumption, distance) {
+        var pricePerLiter = 6; // 可以根据需要更改油价
+        return (consumption / 100) * distance * pricePerLiter;
+    }
+</script>
+
+   
+      
+    </main>
+
+    <footer>
+        <p>&copy; 2024 油耗计算器. 保留所有权利。</p>
+    </footer>
+</body>
+</html>
